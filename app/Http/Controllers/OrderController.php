@@ -90,4 +90,47 @@ class OrderController extends Controller
 
         return response()->json($order);
     }
+
+    //view all orders
+    public function allOrders(){
+        $orders = Order::with(['user', 'items.product'])
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        return response()->json($orders);
+    }
+
+    //Viewing a single order by ID
+    public function viewOrder($id){
+        $order = Order::with(['user', 'items.product'])->find($id);
+
+        if(! $order){
+            return response()->json(['message' => 'Order not found.'], 404);
+        }
+
+        return response()->json($order);
+    }
+
+    //Updating Order Status
+    public function updateStatus(Request $request, $id){
+        $request->validate([
+            'status' => 'required|in:Received,In-Delivery,Delivered',
+        ]);
+
+         $order = Order::find($id);
+
+        //  if (! $order) {
+        //     return response()->json([
+        //         'message' => "Order with ID {$id} not found."
+        //     ], 404);
+        // }
+
+        $order->status = $request->status;
+        $order->save();
+
+        return response()->json([
+            'message' => 'Order Status Updated Successfully.',
+            'order' => $order->load(['user', 'items.product']),
+        ]);
+    }
 }

@@ -33,3 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/products/{id}', [ProductController::class, 'destroy']);
     });
 });
+
+// Admin Order Management
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/admin/orders', [OrderController::class, 'allOrders']);
+    Route::get('/admin/orders/{id}', [OrderController::class, 'viewOrder']);
+    Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
+});

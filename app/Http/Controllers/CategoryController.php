@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     //Listing all Categories
     public function index(){
-        return response()->json(Category::all);
+        return response()->json(Category::all());
     }
 
     //Adding A New Category (Only Admin)

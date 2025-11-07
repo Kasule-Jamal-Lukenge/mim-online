@@ -39,4 +39,11 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/orders', [OrderController::class, 'allOrders']);
     Route::get('/admin/orders/{id}', [OrderController::class, 'viewOrder']);
     Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateStatus']);
+
+    Route::get('/admin/analytics/orders/month', [AnalyticsController::class, 'ordersPerMonth']);
+    Route::get('/admin/analytics/orders/year', [AnalyticsController::class, 'ordersPerYear']);
+    Route::get('/admin/analytics/orders/status', [AnalyticsController::class, 'ordersByStatus']);
+    Route::get('/admin/analytics/users/month', [AnalyticsController::class, 'usersPerMonth']);
+    Route::get('/admin/analytics/sales/total', [AnalyticsController::class, 'totalSales']);
+    Route::get('/admin/analytics/summary', [AnalyticsController::class, 'summary']);
 });

@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 
 class AuthController extends Controller
 {
-    //Registers
+
+    // //Registers
     public function register(Request $request){
+            Log::info('Register API hit', $request->all());
+
         try{
             $validated = $request->validate([
                 'first_name' => 'required|string|max:255',
@@ -47,14 +52,9 @@ class AuthController extends Controller
                 'message' => 'Validation failed.',
                 'errors'  => $e->errors(),
             ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'An unexpected error occurred.',
-                'error'   => $e->getMessage(),
-            ], 500);
-        }
-        
+        } 
     }
+
 
     //Login with either the phone number or email
     public function login(Request $request){

@@ -7,6 +7,16 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AnalyticsController;
 
+
+// Route::any('/ping', function () {
+//     return response()->json(['pong' => true, 'php' => PHP_VERSION]);
+// });
+
+// Route::options('/{any}', function () {
+//     return response()->json(['message' => 'CORS preflight handled']);
+// })->where('any', '.*');
+
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -48,3 +58,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/analytics/sales/total', [AnalyticsController::class, 'totalSales']);
     Route::get('/admin/analytics/summary', [AnalyticsController::class, 'summary']);
 });
+
+
+Route::options('{any}', function () {
+    return response()->json(['status' => 'ok']);
+})->where('any', '.*');
